@@ -7,5 +7,6 @@ class Character
     public int Level {get;set;}
     public int EXP {get;set;}
     public string Class{get;set;}
+    public string UserName{get;set;}
 
 }
