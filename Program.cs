@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 
 Console.Clear();
@@ -48,7 +49,9 @@ if(sel=="1")
             Hero.UserName = userName;
             Player = Hero;
             messageWithColor(ConsoleColor.DarkMagenta,"Character has been created! CLASS: "+Player.Class+", USER NAME: "+Player.UserName,false);
-            break;
+            
+           break;
+           
             
         
         }
@@ -149,6 +152,8 @@ void MenuTitle(Character charac)
     }
     else
     {
+        Console.Clear();
+        SaveDataJSON(Player);
         messageWithColor(ConsoleColor.DarkBlue,"User>: "+charac.UserName,true);
         Console.WriteLine("1: Go to Dungeon\n2: Stas\n3: Save\n4: Exit");
         messageWithColor(ConsoleColor.Green,"Select>: ",false);
@@ -159,8 +164,11 @@ void MenuTitle(Character charac)
             string monsterSel = Console.ReadLine();
             if(monsterSel=="1")
             {
-                Monsters Slime = new Monsters(13,3,4,4,"Slime");
-                Battle(Player,Slime);
+                Monsters Slime = new Monsters(13,3,3,4,"Slime");
+               if (Battle(Player,Slime))
+               {
+                    
+               }
             }
         }
     }
@@ -183,14 +191,21 @@ bool Battle(Character charac,Monsters monster)
     messageWithColor(ConsoleColor.DarkMagenta,"Battle Started",true);
     while(true)
     {
+        int i=0;
         if(charac.Health>0&&monster.Health>0)
         {
+            if(i==50)
+            {
+                messageWithColor(ConsoleColor.DarkCyan,"Draw!\nAfter 50 turn no ones win",false);
+                return false;
+            } 
             int realdamagePlayer= generator.Next((charac.Damage-monster.Defend)-2,(charac.Damage-monster.Defend)+3);
             monster.Health-=realdamagePlayer;
-            messageWithColor(ConsoleColor.DarkYellow,monster.Name+" deal "+realdamagePlayer,true);
+            messageWithColor(ConsoleColor.DarkYellow,">> "+monster.Name+" deal "+realdamagePlayer+" damage",true);
             int realdamageMonster = generator.Next((monster.Damage-charac.Defend)-2,(monster.Damage-charac.Defend)+4);
             charac.Health-=realdamageMonster;
-            messageWithColor(ConsoleColor.DarkRed,"You deal from "+monster.Name+" "+realdamageMonster,true);
+            messageWithColor(ConsoleColor.DarkRed,"You deal from "+monster.Name+" "+realdamageMonster+" damage",true);
+            i++;
         }
         if(charac.Health<=0)
         {
@@ -205,4 +220,22 @@ bool Battle(Character charac,Monsters monster)
         }
          
     }
+}
+//For save data in to JSON File
+void SaveDataJSON(Character charac)
+{
+    //For original JsonSerialize
+    //var options = new JsonSerializerOptions();
+    //options.WriteIndented = true;
+   // string dataJson = JsonSerializer.Serialize(charac,options);
+
+   //using Newtonsoft
+   string dataJson = JsonConvert.SerializeObject(charac);
+    if(File.Exists(@"Data.json"))
+    {
+        
+        File.AppendAllText("Data.json",dataJson);
+    }
+    
+    
 }
