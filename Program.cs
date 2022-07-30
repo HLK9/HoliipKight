@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 
 
 Console.Clear();
+//LoadDataJSON();
 messageWithColor(ConsoleColor.Red,"Welcome to Dark World!",true);
 Console.ResetColor();
 Console.WriteLine("Hello please select mode with number below!\n1: New Game\n2: Load Game\n3: Credit\n4: Exit"); 
@@ -222,7 +223,7 @@ bool Battle(Character charac,Monsters monster)
     }
 }
 //For save data in to JSON File
-void SaveDataJSON(Character charac)
+ void SaveDataJSON(Character charac)
 {
     //For original JsonSerialize
     //var options = new JsonSerializerOptions();
@@ -231,11 +232,31 @@ void SaveDataJSON(Character charac)
 
    //using Newtonsoft
    string dataJson = JsonConvert.SerializeObject(charac);
-    if(File.Exists(@"Data.json"))
+    while(true)
     {
+        int i=0;
+        try
+        {
+          
+            
+            File.WriteAllText("Data.json",dataJson);
+            break;
+        }
+        catch
+        {
+            if(i==5) break;
+            //No more than 5 times
+            i++;            
+             File.Create("Data.json");  
+            continue;
+        }
         
-        File.AppendAllText("Data.json",dataJson);
     }
-    
-    
+}
+//For load date from json file
+void LoadDataJSON()
+{
+    string jsonData =File.ReadAllText("Data.json");
+    Player = JsonConvert.DeserializeObject<Character>(jsonData);
+   
 }
