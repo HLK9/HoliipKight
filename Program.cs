@@ -131,8 +131,11 @@ if(sel=="1")
     
 if(sel=="2")
 {
-    messageWithColor(ConsoleColor.Green,"Please type User name here: ",false);
-    string userName = Console.ReadLine();
+    messageWithColor(ConsoleColor.DarkMagenta,"=====Infomation=====",true);
+    Console.WriteLine(Player.UserName);
+    Console.WriteLine(Player.Level);
+    messageWithColor(ConsoleColor.DarkYellow,"1: Play with current user          2: Return to menu",true);
+    messageWithColor(ConsoleColor.DarkGreen,"Select>: ",false);
 }
 //For print message with color
  void messageWithColor(ConsoleColor color,string message,bool brline)
