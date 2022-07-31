@@ -136,6 +136,13 @@ if(sel=="2")
     Console.WriteLine(Player.Level);
     messageWithColor(ConsoleColor.DarkYellow,"1: Play with current user          2: Return to menu",true);
     messageWithColor(ConsoleColor.DarkGreen,"Select>: ",false);
+    string select = Console.ReadLine();
+    if(select=="1")
+    {
+          MenuTitle(Player);
+    }
+      
+    
 }
 //For print message with color
  void messageWithColor(ConsoleColor color,string message,bool brline)
@@ -157,7 +164,6 @@ void MenuTitle(Character charac)
     else
     {
         Console.Clear();
-        SaveDataJSON(Player);
         messageWithColor(ConsoleColor.DarkBlue,"User>: "+charac.UserName,true);
         Console.WriteLine("1: Go to Dungeon\n2: Stas\n3: Save\n4: Exit");
         messageWithColor(ConsoleColor.Green,"Select>: ",false);
@@ -175,6 +181,7 @@ void MenuTitle(Character charac)
                }
             }
         }
+       
     }
 }
 //Method to print Monsters list 
