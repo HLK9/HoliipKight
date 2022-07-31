@@ -12,7 +12,7 @@ Console.WriteLine("Hello please select mode with number below!\n1: New Game\n2: 
 Console.ForegroundColor = ConsoleColor.Green;
 Console.Write("Select>: ");
 Console.ResetColor();
-string sel = Console.ReadLine();
+string sel = Console.ReadLine(); 
 
 //initlize Character for player
 Character Player = new Character();
@@ -163,24 +163,40 @@ void MenuTitle(Character charac)
     }
     else
     {
-        Console.Clear();
-        messageWithColor(ConsoleColor.DarkBlue,"User>: "+charac.UserName,true);
-        Console.WriteLine("1: Go to Dungeon\n2: Stas\n3: Save\n4: Exit");
-        messageWithColor(ConsoleColor.Green,"Select>: ",false);
-        string sel = Console.ReadLine();
-        if(sel=="1")
+        while(true)
         {
-            MonsterList();
-            string monsterSel = Console.ReadLine();
-            if(monsterSel=="1")
-            {
-                Monsters Slime = new Monsters(13,3,3,4,"Slime");
-               if (Battle(Player,Slime))
-               {
-                    
-               }
-            }
+                Console.Clear();
+                messageWithColor(ConsoleColor.DarkBlue,"User>: "+charac.UserName,true);
+                Console.WriteLine("1: Go to Dungeon\n2: Stas\n3: Save\n4: Exit");
+                messageWithColor(ConsoleColor.Green,"Select>: ",false);
+                string sel = Console.ReadLine();
+                if(sel=="1")
+                {
+                    MonsterList();
+                    string monsterSel = Console.ReadLine();
+                    if(monsterSel=="1")
+                        {
+                            Monsters Slime = new Monsters(13,3,3,4,"Slime");
+                            if (Battle(Player,Slime))
+                            {
+                                    
+                            }
+                        }
+                    if(monsterSel=="2")
+                        {
+                            Monsters Bat = new Monsters(20,5,4,4,"Bat");
+                        }
+                    if(monsterSel=="3")
+                        {
+                            Monsters Kix = new Monsters(28,9,7,8,"Kix");
+                        }
+                    if(monsterSel=="4")
+                        {
+                            Monsters Tyconx = new Monsters(39,13,15,12,"Tyconx");
+                        }
+                }            
         }
+        
        
     }
 }
@@ -269,4 +285,14 @@ void LoadDataJSON()
     string jsonData =File.ReadAllText("Data.json");
     Player = JsonConvert.DeserializeObject<Character>(jsonData);
    
+}
+void EXPIncrease(int exp)
+{
+    if(Player.UserName==""||Player.UserName==null) return;
+    Player.EXP+=exp;
+   if(Player.EXP>=20)
+   {
+        Player.Level=2;
+        
+   }
 }
